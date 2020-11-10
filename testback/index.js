@@ -23,3 +23,15 @@ app.get("/signup", (req, res) => {
 app.listen(port, () => {
   console.log("server is up and running....");
 });
+const admin = (req, res) => {
+  return res.send("this is admin");
+};
+const isAdmin = (req, res, next) => {
+  console.log("isAdmin running");
+  next();
+};
+const isloggedin = (req, res, next) => {
+  console.log("is logged in!!");
+  next();
+};
+app.get("/admin", isloggedin, isAdmin, admin);

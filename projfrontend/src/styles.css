@@ -1,0 +1,40 @@
+.btn,
+.jumbotron,
+.nav :hover {
+  border-radius: 0px;
+}
+.jumbotron {
+  height: 20px;
+  margin-top: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
+  border-radius: 10px;
+}
+
+body {
+  background-image: url("images/img.jpg");
+  background-size: 100%;
+}
+
+footer {
+  margin-top: 60px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  background-color: #777e8b;
+}
+.card {
+  background-color: #eec213;
+}
+.container {
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+.display-4 {
+  font-family: "Lobster", cursive;
+}
+.display {
+  font-size: 20px;
+  font-family: "Dancing Script", cursive;
+  color: #bb2cd9;
+}

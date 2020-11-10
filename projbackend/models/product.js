@@ -16,11 +16,11 @@ const productSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      required: true,
+      // required: true,
       maxlength: 32,
       trim: true,
     },
-    catergory: {
+    category: {
       type: ObjectId,
       ref: "Category", //where this object id is comming from
       required: true,

@@ -41,7 +41,7 @@ var userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+//setting password when we say encrypted password we always use virtual and we also give paasword feild in postman
 userSchema
   .virtual("password")
   .set(function (password) {
@@ -52,13 +52,14 @@ userSchema
   .get(function () {
     return this._password;
   });
-
-userSchema.method = {
+//checking Password authentication
+userSchema.methods = {
   authenticate: function (plainpassword) {
     return this.securePassword(plainpassword) === this.encry_password;
   },
+  //encrypting message
   securePassword: function (plainpassword) {
-    if (!password) return "";
+    if (!plainpassword) return "";
     try {
       return crypto
         .createHmac("sha256", this.salt)
