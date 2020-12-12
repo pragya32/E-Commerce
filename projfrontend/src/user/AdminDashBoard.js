@@ -18,6 +18,11 @@ const AdminDash = () => {
             </Link>
           </li>
           <li className="list-group-item">
+            <Link to="/admin/category" className="nav-link text-success">
+              Manage Category
+            </Link>
+          </li>
+          <li className="list-group-item">
             <Link to="/admin/create/product" className="nav-link text-success">
               Create Products
             </Link>
@@ -38,9 +43,19 @@ const AdminDash = () => {
   };
   const adminRightSide = () => {
     return (
-      <div>
-        <h1>Admin</h1>
-      </div>
+      <>
+        <h4 className="card-header">Admin Information</h4>
+        <ul className="list-group">
+          <li className="list-group-item">
+            <span className="badge badge-success mr-2">Name</span>
+            {name}
+          </li>
+          <li className="list-group-item">
+            <span className="badge badge-success mr-2">Email</span>
+            {email}
+          </li>
+        </ul>
+      </>
     );
   };
 

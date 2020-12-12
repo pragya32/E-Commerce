@@ -9,6 +9,7 @@
     "bootstrap": "^4.5.3",
     "classnames": "^2.2.6",
     "cors": "^2.8.5",
+    "mdbreact": "^4.27.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.4.0",
     "react-dom": "^16.13.1",

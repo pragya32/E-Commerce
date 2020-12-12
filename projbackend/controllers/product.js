@@ -2,16 +2,14 @@ const Product = require("../models/product");
 const formidable = require("formidable");
 const _ = require("lodash");
 const fs = require("fs");
-const product = require("../models/product");
-const { sortBy } = require("lodash");
 
-exports.getProductById = (res, req, next, id) => {
+exports.getProductById = (req, res, next, id) => {
   Product.findById(id)
     .populate("category")
     .exec((err, product) => {
       if (err) {
         return res.status(400).json({
-          error: "No similar product was found in db",
+          error: "Product not found",
         });
       }
       req.product = product;
@@ -31,14 +29,14 @@ exports.createProduct = (req, res) => {
     }
     //destructure the fields
     const { name, description, price, category, stock } = fields;
-    console.log(fields);
+
     if (!name || !description || !category || !stock) {
       return res.status(400).json({
         error: "Please include all fields",
       });
     }
 
-    var product = new Product(fields);
+    let product = new Product(fields);
 
     //handle file here
     if (file.photo) {
@@ -50,7 +48,7 @@ exports.createProduct = (req, res) => {
       product.photo.data = fs.readFileSync(file.photo.path);
       product.photo.contentType = file.photo.type;
     }
-    console.log(product);
+    // console.log(product);
 
     //save to the DB
     product.save((err, product) => {
@@ -68,6 +66,7 @@ exports.getProduct = (req, res) => {
   req.product.photo = undefined;
   return res.json(req.product);
 };
+
 //middleware
 exports.photo = (req, res, next) => {
   if (req.product.photo.data) {
@@ -77,21 +76,24 @@ exports.photo = (req, res, next) => {
   next();
 };
 
+// delete controllers
 exports.deleteProduct = (req, res) => {
   let product = req.product;
+  console.log(req.product);
   product.remove((err, deletedProduct) => {
     if (err) {
       return res.status(400).json({
-        error: "failed",
+        error: "Failed to delete the product",
       });
     }
     res.json({
-      message: "deleted",
+      message: "Deletion was a success",
       deletedProduct,
     });
   });
 };
 
+// delete controllers
 exports.updateProduct = (req, res) => {
   let form = new formidable.IncomingForm();
   form.keepExtensions = true;
@@ -131,8 +133,9 @@ exports.updateProduct = (req, res) => {
   });
 };
 
-//listing
-exports.getAllProduct = (req, res) => {
+//product listing
+
+exports.getAllProducts = (req, res) => {
   let limit = req.query.limit ? parseInt(req.query.limit) : 8;
   let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
 
@@ -144,18 +147,18 @@ exports.getAllProduct = (req, res) => {
     .exec((err, products) => {
       if (err) {
         return res.status(400).json({
-          error: "no products",
+          error: "NO product FOUND",
         });
       }
       res.json(products);
     });
 };
 
-exports.getAllUniqueCate = (req, res) => {
+exports.getAllUniqueCategories = (req, res) => {
   Product.distinct("category", {}, (err, category) => {
     if (err) {
       return res.status(400).json({
-        error: "No category found",
+        error: "NO category found",
       });
     }
     res.json(category);
@@ -163,7 +166,7 @@ exports.getAllUniqueCate = (req, res) => {
 };
 
 exports.updateStock = (req, res, next) => {
-  let myOperations = req.body.products.map((prod) => {
+  let myOperations = req.body.order.products.map((prod) => {
     return {
       updateOne: {
         filter: { _id: prod._id },
@@ -171,6 +174,7 @@ exports.updateStock = (req, res, next) => {
       },
     };
   });
+
   Product.bulkWrite(myOperations, {}, (err, products) => {
     if (err) {
       return res.status(400).json({
