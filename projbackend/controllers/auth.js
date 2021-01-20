@@ -23,7 +23,7 @@ exports.signup = (req, res) => {
     res.json({
       name: user.name,
       email: user.email,
-      id: user._id,
+      id: user.id,
     });
   });
 };
@@ -49,7 +49,7 @@ exports.signin = (req, res) => {
         error: "password does not match",
       });
     }
-    const token = jwt.sign({ id: user._id }, process.env.SECRET); //PUT TOKEN IN THE COOKIE
+    const token = jwt.sign({ id: user.id }, process.env.SECRET); //PUT TOKEN IN THE COOKIE
     res.cookie("token", token, { expire: new Date() + 9999 });
     //send respond to frontend
     const { id, name, email, role } = user;
@@ -68,6 +68,7 @@ exports.signout = (req, res) => {
 exports.isSignedin = jwte({
   secret: process.env.SECRET,
   userProperty: "auth",
+  algorithms: ["HS256"],
 });
 
 //custom middleware (auth: the user change things in his own account)
