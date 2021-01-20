@@ -68,7 +68,6 @@ exports.signout = (req, res) => {
 exports.isSignedin = jwte({
   secret: process.env.SECRET,
   userProperty: "auth",
-  algorithms: ["HS256"],
 });
 
 //custom middleware (auth: the user change things in his own account)
