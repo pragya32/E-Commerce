@@ -25,7 +25,7 @@ const ManageProducts = () => {
   }, []);
 
   const deleteThisProduct = (productId) => {
-    deleteProduct(productId, user.id, token).then((data) => {
+    deleteProduct(productId, user._id, token).then((data) => {
       if (data && data.error) {
         console.log(data.error);
       } else {

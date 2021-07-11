@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { cartEmpty, loadCart } from "./helper/cartHelper";
-import {
-  getMeToken,
-  processPayment,
-  paymentInfo,
-} from "./helper/paymentBHelper";
+import { getMeToken, processPayment } from "./helper/paymentBHelper";
 import { createOrder } from "./helper/orderHelper";
 import { isAuthenticated } from "../auth/helper";
 import DropIn from "braintree-web-drop-in-react";
@@ -19,9 +15,9 @@ const Paymentb = ({ products, setReload = (f) => f, reload = undefined }) => {
     instance: {},
   });
 
-  const userId = isAuthenticated() && isAuthenticated().user.id;
+  const userId = isAuthenticated() && isAuthenticated().user._id;
   const token = isAuthenticated() && isAuthenticated().token;
-  console.log(userId, token);
+  console.log(userId, token + " hii");
   const getToken = (userId, token) => {
     getMeToken(userId, token).then((info) => {
       console.log(" info ", info);

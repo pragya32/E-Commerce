@@ -82,7 +82,7 @@ const UpdateProduct = ({ match }) => {
     event.preventDefault();
     setValues({ ...values, error: "", loading: true });
 
-    updateProduct(match.params.productId, user.id, token, formData).then(
+    updateProduct(match.params.productId, user._id, token, formData).then(
       (data) => {
         if (data.error) {
           setValues({ ...values, error: data.error });

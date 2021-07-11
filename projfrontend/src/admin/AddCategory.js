@@ -30,7 +30,7 @@ const AddCategory = () => {
     setSuccess(false);
 
     //backend request fired
-    createCategory(user.id, token, { name }).then((data) => {
+    createCategory(user._id, token, { name }).then((data) => {
       if (data && data.error) {
         setError(true);
       } else {
